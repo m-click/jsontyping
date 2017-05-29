@@ -52,3 +52,4 @@ upload: check
 	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version).tar.gz
 	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version)-py2-none-any.whl
 	twine upload dist/jsontyping-$$(python setup.py --version)*
+	git push --tags
