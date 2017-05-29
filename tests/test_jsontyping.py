@@ -51,6 +51,7 @@ def test_jsondata_roundtrip():
         ('m', timedelta),
         ('n', date),
         ('o', Dict[str, date]),
+        ('p', datetime),
     ])
     class NamedTupleCSubClass(NamedTupleC):
         def submethod(self):
@@ -86,6 +87,7 @@ def test_jsondata_roundtrip():
             '2': date(2016, 1, 2),
             '4': date(2016, 3, 4),
         },
+        p=datetime(2017, 3, 6, 15, 1, 31, 0),
     )
     jsondata = {
         'a': 1,
@@ -124,6 +126,7 @@ def test_jsondata_roundtrip():
             '2': '2016-01-02',
             '4': '2016-03-04',
         },
+        'p': '2017-03-06T15:01:31Z',
     }
     assert to_jsondata(value) == jsondata
     generated_value = from_jsondata(NamedTupleCSubClass, jsondata)
@@ -145,6 +148,7 @@ def test_to_jsondata_untyped():
         },
         'm': timedelta(minutes=10, microseconds=3),
         'n': date(2017, 1, 2),
+        'o': datetime(2017, 3, 6, 15, 1, 31, 0),
     }
     jsondata = {
         'a': 1,
@@ -160,6 +164,7 @@ def test_to_jsondata_untyped():
         },
         'm': 600.000003,
         'n': '2017-01-02',
+        'o': '2017-03-06T15:01:31Z',
     }
     assert to_jsondata(value) == jsondata
 

@@ -30,7 +30,8 @@ if str is bytes:
     str = unicode # Compatibility with Python 2
 
 _DATE_FORMAT = '%Y-%m-%d'
-_DATETIME_UTC_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+_DATETIME_UTC_FORMAT_MICROSECONDS = '%Y-%m-%dT%H:%M:%S.%fZ'
+_DATETIME_UTC_FORMAT_SECONDS = '%Y-%m-%dT%H:%M:%SZ'
 
 def _gzipfile(output_stream):
     compresslevel = 9
@@ -57,7 +58,9 @@ def _from_jsondata_typed(result_type, jsondata):
     if result_type is str and isinstance(jsondata, str):
         return str(jsondata)
     if result_type is datetime and isinstance(jsondata, str):
-        return datetime.strptime(jsondata, _DATETIME_UTC_FORMAT)
+        if '.' in jsondata:
+            return datetime.strptime(jsondata, _DATETIME_UTC_FORMAT_MICROSECONDS)
+        return datetime.strptime(jsondata, _DATETIME_UTC_FORMAT_SECONDS)
     if result_type is date and isinstance(jsondata, str):
         return datetime.strptime(jsondata, _DATE_FORMAT).date()
     if result_type is timedelta and isinstance(jsondata, float):
@@ -114,7 +117,9 @@ def _to_jsondata_untyped(value):
     if isinstance(value, str):
         return str(value)
     if isinstance(value, datetime):
-        return str(value.strftime(_DATETIME_UTC_FORMAT))
+        if value.microsecond == 0:
+            return str(value.strftime(_DATETIME_UTC_FORMAT_SECONDS))
+        return str(value.strftime(_DATETIME_UTC_FORMAT_MICROSECONDS))
     if isinstance(value, date):
         return str(value.strftime(_DATE_FORMAT))
     if isinstance(value, timedelta):
