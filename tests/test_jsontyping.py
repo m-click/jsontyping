@@ -58,7 +58,7 @@ def test_jsondata_roundtrip():
     value = NamedTupleCSubClass(
         a=1,
         b=True,
-        c=2,
+        c=123456789012345678901234567890,
         d='test\u00a7',
         e=1.4,
         f=datetime(2016, 7, 1, 18, 0, 28, 123456),
@@ -90,7 +90,7 @@ def test_jsondata_roundtrip():
     jsondata = {
         'a': 1,
         'b': True,
-        'c': 2,
+        'c': 123456789012345678901234567890,
         'd': 'test\u00a7',
         'e': 1.4,
         'f': '2016-07-01T18:00:28.123456Z',
