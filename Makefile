@@ -21,6 +21,7 @@ usage:
 	@echo ''
 	@echo '    make check'
 	@echo '    make clean'
+	@echo '    make dist'
 	@echo '    make upload'
 	@echo ''
 
@@ -44,12 +45,15 @@ tmp/lib%.zip:
 clean:
 	rm -rf tmp/
 
-.PHONY: upload
-upload: check
-	git tag -s -m $$(python setup.py --version) $$(python setup.py --version)
+.PHONY: dist
+dist: check
 	python setup.py sdist
 	python setup.py bdist_wheel
 	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version).tar.gz
 	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version)-py2-none-any.whl
+
+.PHONY: upload
+upload: dist
+	git tag -s -m $$(python setup.py --version) $$(python setup.py --version)
 	twine upload dist/jsontyping-$$(python setup.py --version)*
 	git push --tags
