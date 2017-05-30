@@ -37,7 +37,7 @@ PACKAGES_3 = pytest
 
 tmp/lib%.zip:
 	rm -rf $(basename $@)
-	pip$* install --isolated --system -t $(basename $@) $(PACKAGES_$*)
+	pip$* install --isolated -t $(basename $@) $(PACKAGES_$*)
 	cd $(basename $@) && zip -r9 ../$(notdir $@) *
 	rm -rf $(basename $@)
 
