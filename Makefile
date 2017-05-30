@@ -49,9 +49,9 @@ clean:
 dist: check
 	rm -rf dist/
 	python setup.py sdist
-	python setup.py bdist_wheel
+	python setup.py bdist_wheel --universal
 	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version).tar.gz
-	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version)-py2-none-any.whl
+	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version)-py2.py3-none-any.whl
 
 .PHONY: upload
 upload: dist
