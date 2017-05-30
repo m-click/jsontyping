@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name='jsontyping',
-    version='1.0.2',
+    version='1.0.3',
     description='JSON support for named tuples, datetime and other objects, preventing ambiguity via type annotations',
     url='https://github.com/m-click/jsontyping',
     author='Volker Diels-Grabsch',
