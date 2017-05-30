@@ -43,10 +43,11 @@ tmp/lib%.zip:
 
 .PHONY: clean
 clean:
-	rm -rf tmp/
+	rm -rf *.egg-info/ build/ dist/ tmp/
 
 .PHONY: dist
 dist: check
+	rm -rf dist/
 	python setup.py sdist
 	python setup.py bdist_wheel
 	gpg2 --detach-sign -a dist/jsontyping-$$(python setup.py --version).tar.gz
